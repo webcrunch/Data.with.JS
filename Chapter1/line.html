@@ -240,12 +240,51 @@ window.onload = function(){
 			}
 		}
 
-
+);
 // step - label the chart
 	Flotr.draw(getID('chart5'),
-		)
-
-		);
+		[{
+			data: zero,
+			label: "20<sup>th</sup>-Centery Baseline temperature",
+			lines: {
+				show: true,
+				lineWidth: 4
+			},
+			shadowSize: 5,
+			color: "#545454"
+		},
+		{
+			data: temp,
+			label: "Yearly Temperature Difference (°C)",
+			lines: {
+				show: true
+			}
+		},
+		{
+			data: co2,
+			yaxis: 2,
+			label: "CO<sub>2</sub> Concentrion (ppm)",
+			lines: {
+				show: true
+			}
+		}
+		],
+		{
+        	title: "Global Temperature and CO<sub>2</sub> Concentration (NOAA Data)",
+        	grid: {
+        		horizontalLines: false, 
+        		verticalLines: false
+        	},
+        	y2axis: {
+        		min: 300, 
+        		max: 400
+        	},
+        	yaxis: {
+        		min: -0.15, 
+        		max: 0.69,
+                tickFormatter: function(val) {return val+" °C";}}//,
+     }
+);
 
 
 
