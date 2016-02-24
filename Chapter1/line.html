@@ -7,6 +7,9 @@
   </head>
   <body>
     <div id='chart' style="width:600px;height:300px;"></div>
+    <div id='chart2' style="width:600px;height:300px;"></div>
+    <div id='chart3' style="width:600px;height:300px;"></div>
+    <div id='chart4' style="width:600px;height:300px;"></div>
     <!--[if lt IE 9]><script src="js/excanvas.min.js"></script><![endif]-->
     <script src="../flotr2.min.js"></script>
 	
@@ -16,23 +19,14 @@
 {
 	return document.getElementById(id);
 } 
-		var wins = [
-    [ [2006,13],[2007,11],[2008,15],[2009,15],
-      [2010,18],[2011,21],[2012,28]
-    ]
-];
+	
 
+	
 window.onload = function(){
-	Flotr.draw(
-		getID('chart'),
-		wins,
-		{
-			bars: {
-				show: true
-			}
-		}
-	);
+	
 };
+
+
 
 
 	</script>
