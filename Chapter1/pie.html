@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<head>
+    <meta charset="utf-8">
+    <title>Chapter 1 - first example</title>
+  </head>
+  <body>
+    <div id='chart' style="width:600px;height:300px;"></div>
+    <div id='chart2' style="width:600px;height:300px;"></div>
+    <div id='chart3' style="width:600px;height:300px;"></div>
+    <div id='chart4' style="width:600px;height:300px;"></div>
+    <div id='chart5' style="width:600px;height:300px;"></div>
+    <!--[if lt IE 9]><script src="js/excanvas.min.js"></script><![endif]-->
+    <script src="../flotr2.min.js"></script>
+	
+	<script>
+
+	function getID(id)
+{
+	return document.getElementById(id);
+} 
+	
+// step1 defined the data 
+
+var data = [[[0,22.4]],[[1,77.6]]];
+var data2 = [
+                {
+                    data: [[0,22.4]],
+                    label: "Extreme Poverty"
+                },
+                {
+                    data: [[1,77.6]]
+                }
+            ];
+
+window.onload = function(){
+// step2 draw the chart
+Flotr.draw(getID('chart'), data,{
+    pie: {
+        show: true
+    },
+    yaxis: {
+        showLabels: false
+    },
+    xaxis: {
+        showLabels: false
+    },
+    grid: {
+        horizontalLines:false,
+        verticalLines: false
+    }
+});
+
+// step3 - label the values
+Flotr.draw(getID('chart2'), data2, {
+    title: "How much of the World Lives on $1.25/Day ? ",
+    pie: {
+        show: true
+    },
+    yaxis: {
+        showLabels: false
+    },
+    xaxis: {
+        showLabels: false
+    },
+    grid: {
+        horizontalLines: false,
+        verticalLines: false
+    }
+});
+
+
+
+};
+
+
+
+
+	</script>
+
+  </body>
+</html>
