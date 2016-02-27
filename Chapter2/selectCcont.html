@@ -3,20 +3,39 @@
 <head>
 	<meta charset="utf-8">
 	<title>Chapter 2 - Selecting Chart Content</title>
-
+ <style>
+        label {
+            cursor: pointer;
+            display: block;
+            padding-left: 20px;
+            min-height: 20px;*/
+            margin-bottom: 5px;
+        }
+        #chart{
+        	width:500px;
+        	height:333px;
+        	float:left;"
+        }
+        #controls{
+        	float:left;
+        }
+        #title{
+        	margin-left: 70px;
+        }
+    </style>
 </head>
 <body>
 <div id="visualisation">
- <div>Gross Domestic Product (Current US$ in Trillions)</div>
-        <div id='chart' style="width:500px;height:333px;float:left;"></div>
-        <div id='controls' style="float:left;">
+ <div id="title">Gross Domestic Product (Current US$ in Trillions)</div>
+        <div id='chart' ></div>
+        <div id='controls' >
             <p>Select Regions to Include:</p>
-		<label class="checkbox"><input type="checkbox" checked><span style="background-color:rgb(237,194,64);height:0.9em;width:0.9em;margin-right: 0.25em;display:inline-block;"></span> East Asia & pacific</label><br />
+		<!-- <label class="checkbox"><input type="checkbox" checked><span style="background-color:rgb(237,194,64);height:0.9em;width:0.9em;margin-right: 0.25em;display:inline-block;"></span> East Asia & pacific</label><br />
 		<label class="checkbox"><input type="checkbox" checked><span style="background-color:rgb(237,194,64);height:0.9em;width:0.9em;margin-right: 0.25em;display:inline-block;"></span> Europe & Central Asia</label><br />
 		<label class="checkbox"><input type="checkbox" checked><span style="background-color:rgb(237,194,64);height:0.9em;width:0.9em;margin-right: 0.25em;display:inline-block;"></span> Latin America & Caribbean</label><br />
 		<label class="checkbox"><input type="checkbox" checked><span style="background-color:rgb(237,194,64);height:0.9em;width:0.9em;margin-right: 0.25em;display:inline-block;"></span> Middle East & North</label><br />
 		<label class="checkbox"><input type="checkbox" checked><span style="background-color:rgb(237,194,64);height:0.9em;width:0.9em;margin-right: 0.25em;display:inline-block;"></span> South Asia</label><br />
-		<label class="checkbox"><input type="checkbox" checked><span style="background-color:rgb(237,194,64);height:0.9em;width:0.9em;margin-right: 0.25em;display:inline-block;"></span> Sub-Sahara</label>
+		<label class="checkbox"><input type="checkbox" checked><span style="background-color:rgb(237,194,64);height:0.9em;width:0.9em;margin-right: 0.25em;display:inline-block;"></span> Sub-Sahara</label> -->
 	</div>
 </div>
 <!--[if lt IE 9]><script src="../excanvas.min.js"></script><![endif]-->
@@ -56,7 +75,7 @@
         		{
         			data: mea,
         			show: true,
-        			color: "#A5000",
+        			color: "#984EA3",
         			name: "Middle East & North Africa"
         		},
         		{
@@ -73,10 +92,44 @@
         		}
         	]
 
-        // Step 4 - Draw the chart
-        $(function (){
-        	$.plot($("#chart"), [eas, ecs, lcn, mea, sas, ssf]);
+        	 var plotObj = $.plot(
+            $("#chart"),
+            $.map(
+                $.grep(source, function (obj) { return obj.show; }),
+                function (obj) { return { data: obj.data, color: obj.color }; }
+            )
+        );
+        	// step8 -add the controls using javascript 
+        	  $.each(source, function(idx, obj) {
+            var input = $("<input>").attr("id","chk-"+idx).attr("type","checkbox");
+            if (obj.show) {
+                $(input).prop("checked",true);
+            }
+            
+            var span = $("<span>").css({
+                'background-color': obj.color,
+                'display': "inline-block",
+                'height': "0.9em",
+                'width': "0.9em",
+                'margin-right': "0.25em",
+            });
+            var label = $("<label>").addClass("checkbox").append(input).append(span).append(obj.name);
+            $("#controls").append(label);
         });
-    </script>
+       	// step 9 -Respond to the Interactive Controls
+       	$("input[id^='chk-']").click(function(ev) {
+            var idx = ev.target.id.substr(4);
+            source[idx].show = !source[idx].show
+            plotObj.setData(
+                $.map(
+                    $.grep(source, function (obj) { return obj.show; }),
+                    function (obj) { return { data: obj.data, color: obj.color }; }
+                )
+            );
+            plotObj.draw();
+        });
+      
+
+     </script>
 </body>
 </html>
